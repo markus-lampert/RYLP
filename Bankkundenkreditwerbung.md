@@ -109,10 +109,9 @@ execution.setVariable("InternetConnection", sum);
 
 **Service Task „Wetterbericht abrufen“**
 Mit der Folgenden URL kann eine Wettervorhersage für die nächsten 5 Tage für Stralsund abgerufen werden.
+
 | API | URL |
-
 | ------ | ------ |
-
 | WeatherAPI | https://api.openweathermap.org/data/2.5/forecast?q=Stralsund&units=metric&appid=aValidAPIKey |
 
 
