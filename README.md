@@ -3,22 +3,22 @@
 
 
 ###Bankkundenurlaubskreditwerbung
-###Projektdokumentation
+Projektdokumentation
 
-#Team: Reyer, Lampert
-
-
+Team: Reyer, Lampert
 
 
- 
 
 
  
-##Beschreibung des BPMN Prozess- Bankkundenurlaubskreditwerbung
+
+
+ 
+**Beschreibung des BPMN Prozess- Bankkundenurlaubskreditwerbung**
 
 Mithilfe des Prozesses „Bankkundenurlaubskreditwerbung“ sollen geeignete, kreditfähige Kunden ausgewählt werden, denen eine Werbe-E-Mail über die Kreditaufnahme für einen Urlaub an der Ostsee gesendet wird. Je nach dem wie das durchschnittliche Wetter der nächsten 5 Tage in Stralsund ist, wird dem Kunden ein Badeurlaub, Fahrradurlaub , Wanderurlaub oder Kur-/Wellnessurlaub vorgeschlagen.
 
-##BPMN-Prozess
+**BPMN-Prozess**
 Der Gesamtprozess „Bankkundenurlaubskreditwerbung“ besteht aus 2 gesonderten Prozessmodellen (2 Teilen), die durch eine Call-Activity miteinander verbunden sind.
 In dem Pool Bank ist die Lane Service Mitarbeiter und CRM- System enthalten. Diese wird sich im späteren Verlauf trennen. Der Prozess startet. Es wird mithilfe einer Usertask, der Servic-MA aufgefordert seine Kundendaten einzugeben. Folglich wird in der Businessrule-Task über die Bewertung des Kunden entschieden.
 
@@ -32,19 +32,19 @@ Durch die Call-Activity wird der 2. Teil des Gesamtprozesses aufgerufen.
 
 Der Pool Bank enthält die Lanes CRM-System und Service Mitarbeiter (o.g.). Diese ist nun in zwei Lanes aufgeteilt. Der Prozess startet im CRM-System mit dem Unterprozess Prüfung der Internetverbindung. Dieses erfolgt mit Hilfe einer Skript-Task. Mittels Throw-Catch-Pattern wird der Prozess an der Stelle beendet, sollte keine Internetverbindung vorhanden sein. Dabei ist es möglich durch eine Usertask eine Fehlermeldung einzusehen, anschließend wird alle 10 min durch das Timer-Event geprüft, ob eine Internetverbindung besteht. Anschließend wird dabei wird mithilfe einer Service Task Wetterbericht abrufen die Wetter-API aufgerufen. Damit endet der Unterprozess.
 
-###DMN „Werbeprogramm entscheiden“
+**DMN „Werbeprogramm entscheiden“**
 Ist der Wetterbericht erfasst, wird folglich, mittels Business-Rule-Task über das Werbeprogramm entschieden und das DRD ausgeführt.
 
 Bei dem DRD handelt es sich um eine Table mit der Hit Policy= First. Der Input für die DRD besteht aus der Bewölkung in Prozent (integer) und Temperatur in Celsius(double). Der Outputwert ist durch eine String-Enumeration dargestellt. Dabei sollen die durchschnittliche Bewölkung und Temperatur (Edit Number: beide Comparison) der nächsten 5 Tage dargestellt werden.
-```Es gibt genau 4 Möglichkeiten der Ausgabe. Ist die Bewölkung <=40 und die Temperatur >=25 wird ein Badeurlaub vorgeschlagen. Ist die Bewölkung <=40 und die Temperatur >=10 wird ein Fahrradurlaub vorgeschlagen. Ist die Bewölkung >40 und die Temperatur >=10 wird ein Wanderurlaub vorgeschlagen. Trifft die Bewölkung und Temperatur bei keinem der o.g. Werte zu wird ein "Kur-/Wellnessurlaub" vorgeschlagen.
-```
-###Weiter im BPMN-Prozess
+Es gibt genau 4 Möglichkeiten der Ausgabe. Ist die Bewölkung <=40 und die Temperatur >=25 wird ein Badeurlaub vorgeschlagen. Ist die Bewölkung <=40 und die Temperatur >=10 wird ein Fahrradurlaub vorgeschlagen. Ist die Bewölkung >40 und die Temperatur >=10 wird ein Wanderurlaub vorgeschlagen. Trifft die Bewölkung und Temperatur bei keinem der o.g. Werte zu wird ein "Kur-/Wellnessurlaub" vorgeschlagen.
+
+**Weiter im BPMN-Prozess**
 Ist das Werbeprogramm entschieden, kann dieses am nächsten Montag um 8 Uhr, was durch ein Timer-Event gesteuert wird, durch eine User-Task eingesehen werden. Der Prozess soll freitags ausgeführt werden, sodass die E-Mail für den nächsten Montag scheduled wird. Abschließend wird mittels Send Task, ein Kreditangebot für einen Kurzurlaub in der Region Nordost als Werbung zu dem Kunden geschickt. Der Prozess ist beendet.
 
 
 
  
-###Beschreibung des Workflow
+**Beschreibung des Workflow**
 
 -> Den Prozess starten.
 
@@ -62,7 +62,7 @@ Ist das Werbeprogramm entschieden, kann dieses am nächsten Montag um 8 Uhr, was
  
 -> Es wird eine E-Mail an das E-Mail-Postfach des Kunden gesendet, die den Werbetext und die Wetterkonditionen enthält.
  
-###Ausgewählte Elemente der technischen Implementierung
+**Ausgewählte Elemente der technischen Implementierung**
 
 Script Task „Internetverbindung überprüfen“
 
@@ -81,7 +81,7 @@ catch(e){
 execution.setVariable("InternetConnection", sum);
 ```
 
-Service Task „Wetterbericht abrufen“
+**Service Task „Wetterbericht abrufen“**
 Mit der Folgenden URL kann eine Wettervorhersage für die nächsten 5 Tage für Stralsund abgerufen werden.
 https://api.openweathermap.org/data/2.5/forecast?q=Stralsund&units=metric&appid=aValidAPIKey
 Die Abfrage liefert ein json-Dokument zurück, das Wetterdaten in 3-Stunden-Intervallen beginnend bei der aktuellen abgerundeten Stunde plus 3 Stunden enthält. Die Abb. unten zeigt das erste Listen-Element des json-Dokumentes.
