@@ -1,5 +1,5 @@
 # RYLP
-## Implementierung von Prozessen 2019 Reyer-Lampert
+## WIM Implementierung von Prozessen 2019 Reyer-Lampert
 
 Dieses Repository ist im Rahmen des Moduls „WIM Implementierung von Prozessen SoSe 2019“
 entstanden. Es stellt den Quellcode der einzelnen Camunda Process Applications sowie die
